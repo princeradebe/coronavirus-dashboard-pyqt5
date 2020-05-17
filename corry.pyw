@@ -3,20 +3,21 @@ import time
 import urllib.request
 import json
 from corry import *
-from PyQt4.QtCore import Qt
-from PyQt4.QtGui import *
+from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import *
+from PyQt5.QtGui import QPixmap
 from country import country_list
 
-class MyForm(QtGui.QDialog):
+class MyForm(QDialog):
     def __init__(self, parent=None):
-        QtGui.QWidget.__init__(self, parent)
+        QWidget.__init__(self, parent)
         self.ui = Ui_Dialog()
         self.ui.setupUi(self)
         self.get_all()
         countries = country_list.get_country()
         completer = QCompleter(countries)
         self.ui.country.setCompleter(completer)
-        QtCore.QObject.connect(self.ui.country, QtCore.SIGNAL('editingFinished()'), self.search)
+        self.ui.country.editingFinished.connect(self.search)
     
     def get_all(self):
         url = "https://corona.lmao.ninja/v2/all"
@@ -65,7 +66,7 @@ class MyForm(QtGui.QDialog):
         self.ui.lastUpdated.setText("Last updated: " + time_stamp_ft)
 
 if __name__ == "__main__":
-    app = QtGui.QApplication(sys.argv)
+    app = QApplication(sys.argv)
     myapp = MyForm()
     myapp.show()
     sys.exit(app.exec_())
