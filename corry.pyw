@@ -1,6 +1,7 @@
 import sys
 import time
 import urllib.request
+from urllib.parse import urlencode
 import json
 from corry import *
 from PyQt5.QtCore import Qt
@@ -40,7 +41,10 @@ class MyForm(QDialog):
         self.ui.lastUpdated.setText("Last updated: " + time_stamp_ft)        
 
     def search(self):
-        url = "https://corona.lmao.ninja/v2/countries/" + self.ui.country.text()
+        # url = "https://corona.lmao.ninja/v2/countries/" + self.ui.country.text()
+        
+        country = urllib.parse.quote(self.ui.country.text())
+        url = f"https://corona.lmao.ninja/v2/countries/{country}"
 
         headers = {}
         headers['User-Agent'] = 'Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.17 (KHTML, like Gecko) Chrome/24.0.1312.27 Safari/537.17'
